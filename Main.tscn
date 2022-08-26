@@ -261,37 +261,35 @@ shadow_mesh = SubResource("ArrayMesh_borc7")
 [node name="Main" type="Node3D"]
 script = ExtResource("1_yxygs")
 
-[node name="PlayerCube" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.68783, 0.498143, 7.23785)
-mesh = SubResource("BoxMesh_mctwe")
-skeleton = NodePath("../Node3d/MirrorNode")
-
 [node name="Node3d" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71928, 1.81565, -1.70071)
+
+[node name="PlayerCube2" type="MeshInstance3D" parent="Node3d"]
+transform = Transform3D(0.994977, -0.0404321, -0.0915711, 0.0406026, 0.999175, 0, 0.0914956, -0.00371803, 0.995799, 0.430737, -1.31162, 3.23344)
+mesh = SubResource("BoxMesh_mctwe")
+skeleton = NodePath("")
 
 [node name="SubViewport" type="SubViewport" parent="Node3d"]
 gui_disable_input = true
 size = Vector2i(2048, 2048)
 render_target_update_mode = 4
 
-[node name="RemoteTransform3d" type="RemoteTransform3D" parent="Node3d/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71928, 1.81565, -1.70071)
-remote_path = NodePath("../..")
-
-[node name="Mirror" type="Camera3D" parent="Node3d/SubViewport/RemoteTransform3d"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, -1, -1.59798)
+[node name="Mirror" type="Camera3D" parent="Node3d/SubViewport"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 4.71928, 1.90609, -4.34947)
 projection = 3
 current = true
 fov = 60.0
 oblique_normal = Vector3(0, 0, -1)
+oblique_offset = 1.0
 size = 1.43448
+near = 0.001
+far = 100.0
 script = ExtResource("3_fmytd")
 
-[node name="MirrorNode" type="Node3D" parent="Node3d"]
-
-[node name="Mirror" type="MeshInstance3D" parent="Node3d/MirrorNode"]
-transform = Transform3D(-3, -4.52987e-07, 1.98007e-14, 0, -1.31134e-07, -3, 4.52987e-07, -3, 1.31134e-07, 0, -1.11436, 0.117517)
+[node name="Mirror" type="MeshInstance3D" parent="Node3d"]
+transform = Transform3D(-3, -4.52987e-07, 1.98007e-14, 0, -1.31134e-07, -3, 4.52987e-07, -3, 1.31134e-07, 0, 0, 0)
 mesh = SubResource("PlaneMesh_mvvkf")
+skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_gmo50")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
