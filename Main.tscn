@@ -1,11 +1,10 @@
-[gd_scene load_steps=49 format=3 uid="uid://dp1w8qmqbqe41"]
+[gd_scene load_steps=40 format=3 uid="uid://dp1w8qmqbqe41"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_yxygs"]
 [ext_resource type="PackedScene" uid="uid://dkbe7ndgv0ovc" path="res://addons/godot-xr-tools/functions/Function_Direct_movement.tscn" id="2_g0m70"]
 [ext_resource type="PackedScene" uid="uid://cc6ngdqie8o8c" path="res://addons/godot-xr-tools/effects/vignette.tscn" id="2_jb8qg"]
+[ext_resource type="PackedScene" path="res://mirror_node.tscn" id="2_jxki4"]
 [ext_resource type="PackedScene" uid="uid://ks5advemsv8d" path="res://addons/godot-xr-tools/assets/LeftHand.tscn" id="2_ks6r2"]
-[ext_resource type="Texture2D" uid="uid://bbr4gd60873lc" path="res://icon.svg" id="2_muqde"]
-[ext_resource type="Script" path="res://Mirror.gd" id="3_v1oll"]
 [ext_resource type="PackedScene" uid="uid://b0ywd51y32i51" path="res://addons/godot-xr-tools/functions/Function_Teleport.tscn" id="4_3i8dd"]
 [ext_resource type="PackedScene" uid="uid://b7li7qei42jud" path="res://addons/godot-xr-tools/assets/RightHand.tscn" id="4_mos32"]
 [ext_resource type="PackedScene" path="res://addons/godot-xr-tools/functions/Function_Pickup.tscn" id="5_5tsqm"]
@@ -22,62 +21,6 @@
 [ext_resource type="Material" uid="uid://bjon62ek345r1" path="res://assets/OpenGameArt.org/rubberduck_plant_pack/grasses_01.tres" id="18_imo6w"]
 [ext_resource type="Material" uid="uid://bxeny4vu223aw" path="res://assets/OpenGameArt.org/rubberduck_plant_pack/fern_01.tres" id="19_u0ypl"]
 [ext_resource type="Material" uid="uid://cylwipqd8wru" path="res://assets/OpenGameArt.org/rubberduck_plant_pack/flower_03.tres" id="20_fdw8v"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_mvvkf"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_qrauy"]
-viewport_path = NodePath("Node3d/SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_15d5i"]
-resource_local_to_scene = true
-cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_qrauy")
-metallic = 1.0
-texture_filter = 5
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8je5b"]
-albedo_texture = ExtResource("2_muqde")
-
-[sub_resource type="BoxMesh" id="BoxMesh_mctwe"]
-material = SubResource("StandardMaterial3D_8je5b")
-
-[sub_resource type="Animation" id="Animation_mlskp"]
-resource_name = "New Anim"
-length = 20.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerCube:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 10, 20),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, -0.712031, 2.54418), Vector3(0, -0.712031, 12.1527), Vector3(0, -0.712031, 2.54418)]
-}
-
-[sub_resource type="Animation" id="Animation_6gcm8"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerCube:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, -0.712031, 0.812847)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_6hhr5"]
-_data = {
-"New Anim": SubResource("Animation_mlskp"),
-"RESET": SubResource("Animation_6gcm8")
-}
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_oh7xr"]
 
@@ -296,42 +239,8 @@ shadow_mesh = SubResource("ArrayMesh_borc7")
 [node name="Main" type="Node3D"]
 script = ExtResource("1_yxygs")
 
-[node name="Node3d" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.18811, 1.81565, -1.70071)
-
-[node name="DirectionalLight3d" type="DirectionalLight3D" parent="Node3d"]
-transform = Transform3D(-0.866025, -0.410674, -0.285214, -2.98023e-08, -0.570427, 0.821348, -0.5, 0.711309, 0.494004, 0.967659, 3.35207, -1.67603)
-shadow_enabled = true
-
-[node name="Mirror" type="MeshInstance3D" parent="Node3d"]
-transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, -0.829494, 0)
-mesh = SubResource("PlaneMesh_mvvkf")
-surface_material_override/0 = SubResource("StandardMaterial3D_15d5i")
-
-[node name="PlayerCube" type="MeshInstance3D" parent="Node3d"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.712031, 0.812847)
-mesh = SubResource("BoxMesh_mctwe")
-
-[node name="SubViewport" type="SubViewport" parent="Node3d"]
-gui_disable_input = true
-size = Vector2i(2048, 2048)
-render_target_update_mode = 4
-
-[node name="Mirror" type="Camera3D" parent="Node3d/SubViewport"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 3.31623, 0.896418, -2.98594)
-projection = 3
-current = true
-fov = 60.0
-oblique_normal = Vector3(0, 0, -1)
-oblique_offset = 1.417
-size = 1.43448
-script = ExtResource("3_v1oll")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Node3d"]
-autoplay = "New Anim"
-libraries = {
-"": SubResource("AnimationLibrary_6hhr5")
-}
+[node name="MirrorNode" parent="." instance=ExtResource("2_jxki4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.18811, 2.81565, -2.70071)
 
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
 
