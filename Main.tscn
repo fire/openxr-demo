@@ -1,10 +1,11 @@
-[gd_scene load_steps=40 format=3 uid="uid://dp1w8qmqbqe41"]
+[gd_scene load_steps=46 format=3 uid="uid://dp1w8qmqbqe41"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_yxygs"]
 [ext_resource type="PackedScene" uid="uid://dkbe7ndgv0ovc" path="res://addons/godot-xr-tools/functions/Function_Direct_movement.tscn" id="2_g0m70"]
 [ext_resource type="PackedScene" uid="uid://cc6ngdqie8o8c" path="res://addons/godot-xr-tools/effects/vignette.tscn" id="2_jb8qg"]
-[ext_resource type="PackedScene" uid="uid://dwxh4vuyf6gee" path="res://mirror_node.tscn" id="2_jxki4"]
 [ext_resource type="PackedScene" uid="uid://ks5advemsv8d" path="res://addons/godot-xr-tools/assets/LeftHand.tscn" id="2_ks6r2"]
+[ext_resource type="Texture2D" uid="uid://bbr4gd60873lc" path="res://icon.svg" id="2_ld730"]
+[ext_resource type="Script" path="res://Mirror.gd" id="3_fmytd"]
 [ext_resource type="PackedScene" uid="uid://b0ywd51y32i51" path="res://addons/godot-xr-tools/functions/Function_Teleport.tscn" id="4_3i8dd"]
 [ext_resource type="PackedScene" uid="uid://b7li7qei42jud" path="res://addons/godot-xr-tools/assets/RightHand.tscn" id="4_mos32"]
 [ext_resource type="PackedScene" path="res://addons/godot-xr-tools/functions/Function_Pickup.tscn" id="5_5tsqm"]
@@ -22,14 +23,35 @@
 [ext_resource type="Material" uid="uid://bxeny4vu223aw" path="res://assets/OpenGameArt.org/rubberduck_plant_pack/fern_01.tres" id="19_u0ypl"]
 [ext_resource type="Material" uid="uid://cylwipqd8wru" path="res://assets/OpenGameArt.org/rubberduck_plant_pack/flower_03.tres" id="20_fdw8v"]
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_oh7xr"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xnm13"]
+albedo_texture = ExtResource("2_ld730")
+
+[sub_resource type="BoxMesh" id="BoxMesh_mctwe"]
+material = SubResource("StandardMaterial3D_xnm13")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mvvkf"]
+size = Vector2(1, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ikav7"]
+viewport_path = NodePath("Node3d/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmo50"]
+resource_local_to_scene = true
+cull_mode = 2
+albedo_texture = SubResource("ViewportTexture_ikav7")
+metallic = 1.0
+texture_filter = 5
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ejyd7"]
 
 [sub_resource type="Sky" id="Sky_qbv3c"]
-sky_material = SubResource("PhysicalSkyMaterial_oh7xr")
+sky_material = SubResource("PhysicalSkyMaterial_ejyd7")
 
 [sub_resource type="Environment" id="Environment_v7gtd"]
 background_mode = 2
 sky = SubResource("Sky_qbv3c")
+ambient_light_source = 3
+ambient_light_sky_contribution = 0.42
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_o1wyt"]
 size = Vector2(100, 100)
@@ -239,8 +261,38 @@ shadow_mesh = SubResource("ArrayMesh_borc7")
 [node name="Main" type="Node3D"]
 script = ExtResource("1_yxygs")
 
-[node name="MirrorNode" parent="." instance=ExtResource("2_jxki4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.18811, 1.61297, -2.70071)
+[node name="PlayerCube" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.68783, 0.498143, 7.23785)
+mesh = SubResource("BoxMesh_mctwe")
+skeleton = NodePath("../Node3d/MirrorNode")
+
+[node name="Node3d" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71928, 1.81565, -1.70071)
+
+[node name="SubViewport" type="SubViewport" parent="Node3d"]
+gui_disable_input = true
+size = Vector2i(2048, 2048)
+render_target_update_mode = 4
+
+[node name="RemoteTransform3d" type="RemoteTransform3D" parent="Node3d/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71928, 1.81565, -1.70071)
+remote_path = NodePath("../..")
+
+[node name="Mirror" type="Camera3D" parent="Node3d/SubViewport/RemoteTransform3d"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, -1, -1.59798)
+projection = 3
+current = true
+fov = 60.0
+oblique_normal = Vector3(0, 0, -1)
+size = 1.43448
+script = ExtResource("3_fmytd")
+
+[node name="MirrorNode" type="Node3D" parent="Node3d"]
+
+[node name="Mirror" type="MeshInstance3D" parent="Node3d/MirrorNode"]
+transform = Transform3D(-3, -4.52987e-07, 1.98007e-14, 0, -1.31134e-07, -3, 4.52987e-07, -3, 1.31134e-07, 0, -1.11436, 0.117517)
+mesh = SubResource("PlaneMesh_mvvkf")
+surface_material_override/0 = SubResource("StandardMaterial3D_gmo50")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
 
