@@ -313,6 +313,7 @@ mesh = SubResource("BoxMesh_mctwe")
 
 [node name="SubViewport" type="SubViewport" parent="Node3d"]
 gui_disable_input = true
+size = Vector2i(2048, 2048)
 render_target_update_mode = 4
 
 [node name="Mirror" type="Camera3D" parent="Node3d/SubViewport"]
