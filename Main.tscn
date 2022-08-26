@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Main.gd" id="1_yxygs"]
 [ext_resource type="PackedScene" uid="uid://dkbe7ndgv0ovc" path="res://addons/godot-xr-tools/functions/Function_Direct_movement.tscn" id="2_g0m70"]
 [ext_resource type="PackedScene" uid="uid://cc6ngdqie8o8c" path="res://addons/godot-xr-tools/effects/vignette.tscn" id="2_jb8qg"]
-[ext_resource type="PackedScene" path="res://mirror_node.tscn" id="2_jxki4"]
+[ext_resource type="PackedScene" uid="uid://dwxh4vuyf6gee" path="res://mirror_node.tscn" id="2_jxki4"]
 [ext_resource type="PackedScene" uid="uid://ks5advemsv8d" path="res://addons/godot-xr-tools/assets/LeftHand.tscn" id="2_ks6r2"]
 [ext_resource type="PackedScene" uid="uid://b0ywd51y32i51" path="res://addons/godot-xr-tools/functions/Function_Teleport.tscn" id="4_3i8dd"]
 [ext_resource type="PackedScene" uid="uid://b7li7qei42jud" path="res://addons/godot-xr-tools/assets/RightHand.tscn" id="4_mos32"]
@@ -240,7 +240,7 @@ shadow_mesh = SubResource("ArrayMesh_borc7")
 script = ExtResource("1_yxygs")
 
 [node name="MirrorNode" parent="." instance=ExtResource("2_jxki4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.18811, 2.81565, -2.70071)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.18811, 1.81565, -2.70071)
 
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
 
