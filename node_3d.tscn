@@ -1,0 +1,101 @@
+[gd_scene load_steps=11 format=3 uid="uid://bi15jftcdxeis"]
+
+[ext_resource type="Texture2D" uid="uid://bbr4gd60873lc" path="res://icon.svg" id="1_13rrc"]
+[ext_resource type="Script" path="res://Mirror.gd" id="2_fyosj"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mvvkf"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_21qo6"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_slv2r"]
+resource_local_to_scene = true
+cull_mode = 2
+albedo_texture = SubResource("ViewportTexture_21qo6")
+metallic = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8je5b"]
+albedo_texture = ExtResource("1_13rrc")
+
+[sub_resource type="BoxMesh" id="BoxMesh_mctwe"]
+material = SubResource("StandardMaterial3D_8je5b")
+
+[sub_resource type="Animation" id="Animation_mlskp"]
+resource_name = "New Anim"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerCube:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333, 0.666667, 0.7, 0.733333, 0.766667, 0.8, 0.833333, 0.866667, 0.9, 0.933333, 0.966667, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 2.79404), Vector3(0, 0, 2.84336), Vector3(0, 0, 2.98312), Vector3(0, 0, 3.20098), Vector3(0, 0, 3.48461), Vector3(0, 0, 3.82168), Vector3(0, 0, 4.19985), Vector3(0, 0, 4.60679), Vector3(0, 0, 5.03018), Vector3(0, 0, 5.45768), Vector3(0, 0, 5.87696), Vector3(0, 0, 6.27568), Vector3(0, 0, 6.64152), Vector3(0, 0, 6.96214), Vector3(0, 0, 7.22522), Vector3(0, 0, 7.41842), Vector3(0, 0, 7.5527), Vector3(0, 0, 7.64998), Vector3(0, 0, 7.71438), Vector3(0, 0, 7.75), Vector3(0, 0, 7.76096), Vector3(0, 0, 7.75137), Vector3(0, 0, 7.72534), Vector3(0, 0, 7.68697), Vector3(0, 0, 7.64039), Vector3(0, 0, 7.58969), Vector3(0, 0, 7.53899), Vector3(0, 0, 7.49241), Vector3(0, 0, 7.45404), Vector3(0, 0, 7.42801), Vector3(0, 0, 7.41842)]
+}
+
+[sub_resource type="Animation" id="Animation_6gcm8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerCube:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 2.79404)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6hhr5"]
+_data = {
+"New Anim": SubResource("Animation_mlskp"),
+"RESET": SubResource("Animation_6gcm8")
+}
+
+[node name="Node3d" type="Node3D"]
+
+[node name="DirectionalLight3d" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.410674, -0.285214, -2.98023e-08, -0.570427, 0.821348, -0.5, 0.711309, 0.494004, 0.967659, 3.35207, -1.67603)
+shadow_enabled = true
+
+[node name="MeshInstance3d" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_mvvkf")
+surface_material_override/0 = SubResource("StandardMaterial3D_slv2r")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Camera3d" type="Camera3D" parent="."]
+transform = Transform3D(0.71934, 0.342066, -0.6046, 0, 0.870356, 0.492424, 0.694659, -0.35422, 0.626081, -3.92495, 2.81715, 4.4936)
+current = true
+
+[node name="MeshInstance3d2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.79404)
+mesh = SubResource("BoxMesh_mctwe")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+gui_disable_input = true
+size = Vector2i(1024, 1024)
+render_target_update_mode = 4
+
+[node name="Mirror" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -8.74228e-08, 0, 0)
+rotation_edit_mode = 2
+projection = 3
+current = true
+fov = 60.0
+oblique_normal = Vector3(0, 0, -1)
+oblique_offset = 0.01
+size = 1.43448
+script = ExtResource("2_fyosj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "New Anim"
+libraries = {
+"": SubResource("AnimationLibrary_6hhr5")
+}

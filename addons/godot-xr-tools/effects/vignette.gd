@@ -47,14 +47,14 @@ var last_location : Vector3
 func _update_radius():
 	if radius < 1.0:
 		if material:
-			material.set_shader_param("radius", radius * sqrt(2))
+			material.set_shader_uniform("radius", radius * sqrt(2))
 		$Mesh.visible = true
 	else:
 		$Mesh.visible = false
 
 func _update_fade():
 	if material:
-		material.set_shader_param("fade", fade)
+		material.set_shader_uniform("fade", fade)
 
 func _update_mesh():
 	var vertices : PackedVector3Array
