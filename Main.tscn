@@ -324,7 +324,6 @@ fov = 60.0
 oblique_normal = Vector3(0, 0, -1)
 oblique_offset = 0.01
 size = 1.43448
-near = 1.0
 script = ExtResource("3_v1oll")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Node3d"]
