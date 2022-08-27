@@ -33,7 +33,7 @@ material = SubResource("StandardMaterial3D_xnm13")
 size = Vector2(1, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ikav7"]
-viewport_path = NodePath("Node3d/SubViewport")
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmo50"]
 resource_local_to_scene = true
@@ -276,8 +276,6 @@ transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 4.7192
 projection = 3
 current = true
 fov = 60.0
-oblique_normal = Vector3(0, 0, -1)
-oblique_offset = 1.0
 size = 1.43448
 near = 0.001
 far = 100.0
